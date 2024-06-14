@@ -1,0 +1,3 @@
+# Django Rest Api with MongoDB
+### Project is still under development
+We will update it untill the last commit named "completed"......
