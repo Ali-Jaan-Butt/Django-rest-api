@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="forgot-password-container">
+        <div class="forgot-password-form">
+            <div class="user-icon">
+                <i class="fa fa-user-circle"></i>
+            </div>
+            <h2>Forgot Password</h2>
+            <p>Please enter your email address to reset your password.</p>
+            <form action="{% url 'verify' %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <i class="fa fa-envelope icon"></i>
+                    <input type="email" placeholder="Email ID" required>
+                </div>
+                <button type="submit">Reset Password</button>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #fc466b, #3f5efb);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .forgot-password-container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+        .user-icon {
+            background: #1a73e8;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        p {
+            color: white;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            width: 92%;
+        }
+        .input-group .icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #1a73e8;
+        }
+        .input-group input {
+            width: calc(100% - 30px);
+            padding: 15px 15px 15px 45px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+        .input-group input::placeholder {
+            color: #aaa;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            background: #1a73e8;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1667c0;
+        }
+    </style>
+</body>
+</html>
