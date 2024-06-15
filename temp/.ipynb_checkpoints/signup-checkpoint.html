@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="#">
 </head>
 <body>
     <div class="signup-container">
@@ -13,24 +13,29 @@
             <div class="user-icon">
                 <i class="fa fa-user-circle"></i>
             </div>
-            <form action="{% url 'login' %}">
+            <form action="{% url 'signup_inf' %}" method="post">
                 {% csrf_token %}
                 <div class="input-group">
                     <i class="fa fa-user icon"></i>
-                    <input type="text" placeholder="Full Name" required>
+                    <input type="text" placeholder="Full Name" name="name" required>
                 </div>
                 <div class="input-group">
                     <i class="fa fa-envelope icon"></i>
-                    <input type="email" placeholder="Email ID" required>
+                    <input type="email" placeholder="Email ID" name="email" required>
                 </div>
                 <div class="input-group">
                     <i class="fa fa-lock icon"></i>
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" placeholder="Password" name="pass" required>
                 </div>
                 <div class="input-group">
                     <i class="fa fa-lock icon"></i>
-                    <input type="password" placeholder="Confirm Password" required>
+                    <input type="password" placeholder="Confirm Password" name="conf_pass" required>
                 </div>
+                <label for="user_type">Sign up as:</label>
+                <select id="user_type" name="user_type" required>
+                    <option value="job_seeker">Job Seeker</option>
+                    <option value="client">Company</option>
+                </select>
                 <div class="options">
                     <label>
                         <input type="checkbox"> I agree to the Terms and Conditions

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="#">
 </head>
 <body>
     <div class="login-container">
@@ -13,25 +13,32 @@
             <div class="user-icon">
                 <i class="fa fa-user-circle"></i>
             </div>
-            <form>
+            <form action="{% url 'login_inf' %}" method="post">
                 {% csrf_token %}
                 <div class="input-group">
                     <i class="fa fa-envelope icon"></i>
-                    <input type="email" placeholder="Email ID" required>
+                    <input type="email" placeholder="Email ID" name="login_email" required>
                 </div>
                 <div class="input-group">
                     <i class="fa fa-lock icon"></i>
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" placeholder="Password" name="login_password" required>
                 </div>
                 <div class="options">
                     <label>
                         <input type="checkbox"> Remember me
                     </label>
-                    <a href="{% url 'forget' %}" class="forgot-password">Forgot Password?</a>
+                    <a href="{% url 'forget_pass' %}" class="forgot-password">Forgot Password?</a>
                 </div>
                 <button type="submit">Login</button>
                 <a href="{% url 'signup' %}" class="sign-up">Don't have an account?</a>
             </form>
+            <!-- {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <p class="{{ message.tags }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %} -->
         </div>
     </div>
 

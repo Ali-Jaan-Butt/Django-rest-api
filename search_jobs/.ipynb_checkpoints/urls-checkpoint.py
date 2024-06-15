@@ -23,7 +23,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', views.myapp, name='login'),
     path('sign-up', views.signup, name='signup'),
-    path('forget-password', views.forget, name='forget'),
-    path('verify', views.verify, name='verify'),
-    path('update-password', views.update, name='update'),
+    path('login', views.signup_info, name='signup_inf'),
+    path('dash', views.login_info, name='login_inf'),
+    path('forget-password', views.forget, name='forget_pass'),
+    path('verify-code', views.verify, name='verify-pass'),
+    path('verification-code', views.email_verify, name='code'),
 ]

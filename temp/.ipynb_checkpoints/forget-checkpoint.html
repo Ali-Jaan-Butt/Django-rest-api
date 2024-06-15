@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="#">
 </head>
 <body>
     <div class="forgot-password-container">
@@ -15,11 +15,11 @@
             </div>
             <h2>Forgot Password</h2>
             <p>Please enter your email address to reset your password.</p>
-            <form action="{% url 'verify' %}">
+            <form method="post" action="{% url 'code' %}">
                 {% csrf_token %}
                 <div class="input-group">
                     <i class="fa fa-envelope icon"></i>
-                    <input type="email" placeholder="Email ID" required>
+                    <input type="email" placeholder="Email ID" name="verify-email" required>
                 </div>
                 <button type="submit">Reset Password</button>
             </form>

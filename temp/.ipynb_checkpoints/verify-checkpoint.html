@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Code Verification</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="#">
 </head>
 <body>
     <div class="verification-container">
@@ -15,7 +15,7 @@
             </div>
             <h2>Reset Code Verification</h2>
             <p>Please enter the verification code sent to your email.</p>
-            <form action="{% url 'update' %}">
+            <form action="#">
                 {% csrf_token %}
                 <div class="input-group">
                     <i class="fa fa-key icon"></i>
