@@ -24,6 +24,8 @@ def update(request):
 
 def login_info(request):
     if request.method == 'POST':
+        con_email = None
+        con_pass = None
         login_email = request.POST.get('login_email')
         login_pass = request.POST.get('login_password')
         client = pymongo.MongoClient()
@@ -37,19 +39,28 @@ def login_info(request):
             if login_email==obj['Email'] and login_pass==obj['Password']:
                 con_email = login_email
                 con_pass = login_pass
-        if con_email==login_email and con_pass==login_pass:
-            log = {'Email':login_email, 'Password':login_pass, 'User_Type':obj['User_Type']}
-            client = pymongo.MongoClient()
-            database_name = "web_project"
-            db = client[database_name]
-            collection_name = "login_data"
-            collection = db[collection_name]
-            collection.insert_one(log)
-            print(login_email)
-            print(login_pass)
-            return render(request, 'temp/job_posting.html')
+        if con_pass!=None:
+            if con_email==login_email and con_pass==login_pass:
+                log = {'Email':login_email, 'Password':login_pass, 'User_Type':obj['User_Type']}
+                client = pymongo.MongoClient()
+                database_name = "web_project"
+                db = client[database_name]
+                collection_name = "login_data"
+                collection = db[collection_name]
+                collection.insert_one(log)
+                print(login_email)
+                print(login_pass)
+                return render(request, 'temp/job_posting.html')
+            else:
+                print('Invalid login cridentials')
+                log = {}
+                log['User_Type'] = 'Nothing'
+                return render(request, 'temp/login.html')
         else:
-            print('Invalid login cridentials')
+            print('Account not found')
+            log = {}
+            log['User_Type'] = 'Nothing'
+            return render(request, 'temp/login.html')
     return log['User_Type']
 
 def signup_info(request):
@@ -68,38 +79,64 @@ def signup_info(request):
         collection.insert_one(sign)
         return myapp(request)
     return user_type
-
-def generate_verification_code(length=6):
-    letters_and_digits = string.ascii_letters + string.digits
-    return ''.join(random.choice(letters_and_digits) for i in range(length))
-
-def send_verification_email(recipient_email, verification_code):
-    sender_email = "interns.hub510@gmail.com"
-    sender_password = "sherlocked21239"
-    subject = "Your Verification Code of Interns.hub"
-
-    message = MIMEMultipart()
-    message['From'] = sender_email
-    message['To'] = recipient_email
-    message['Subject'] = subject
-
-    body = f"Your verification code is: {verification_code}"
-    message.attach(MIMEText(body, 'plain'))
-
-    try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login(sender_email, sender_password)
-        text = message.as_string()
-        server.sendmail(sender_email, recipient_email, text)
-        server.quit()
-        print("Verification email sent successfully!")
-    except Exception as e:
-        print(f"Failed to send email: {e}")
+    
+letters_and_digits = string.ascii_letters + string.digits
+code = ''.join(random.choice(letters_and_digits) for i in range(6))
 
 def email_verify(request):
     if request.method=='POST':
         recipient_email = request.POST.get('verify-email')
-        verification_code = generate_verification_code()
-        send_verification_email(recipient_email, verification_code)
-    return verify(request)
+        with open('up_pass_email.txt', 'w') as file:
+            file.write(recipient_email)
+        client = pymongo.MongoClient()
+        database_name = "web_project"
+        db = client[database_name]
+        collection_name = "signup_data"
+        collection = db[collection_name]
+        cursor = collection.find()
+        for document in cursor:
+            obj = document
+            if recipient_email==obj['Email']:
+                conf_res_email = recipient_email
+        with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+            smtp.ehlo()
+            smtp.starttls()
+            smtp.ehlo()
+            smtp.login('interns.hub510@gmail.com', 'frer bnho uocd pztb')
+            subject = 'Verification Code'
+            body = 'Your verification code is: '+str(code)
+            msg = f'Subject: {subject}\n\n{body}'
+            smtp.sendmail('interns.hub510@gmail.com', conf_res_email, msg)
+        return verify(request)
+    return conf_res_email
+
+def code_verify(request):
+    if request.method=='POST':
+        in_code = request.POST.get('ver_code')
+        if in_code==code:
+            return update(request)
+        else:
+            pass
+    return in_code
+
+def update_pass(request):
+    if request.method=='POST':
+        up_pass = request.POST.get('updated-pass')
+        conf_up_pass = request.POST.get('conf-update-pass')
+        with open('up_pass_email.txt', 'r') as file:
+            up_email = file.read()
+        if up_pass==conf_up_pass:
+            client = pymongo.MongoClient()
+            database_name = "web_project"
+            db = client[database_name]
+            collection_name = "signup_data"
+            collection = db[collection_name]
+            cursor = collection.find()
+            for document in cursor:
+                obj = document
+                if up_email==obj['Email']:
+                    found_pass = up_pass
+            ud_obj = { '$set': {'Password':found_pass, 'Confirm_Password':found_pass}}
+            collection.update_one(obj, ud_obj)
+            print('Data updated')
+    return render(request, 'temp/login.html')

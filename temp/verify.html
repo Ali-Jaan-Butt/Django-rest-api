@@ -15,11 +15,11 @@
             </div>
             <h2>Reset Code Verification</h2>
             <p>Please enter the verification code sent to your email.</p>
-            <form action="#">
+            <form method="post" action="{% url 'code-enter' %}">
                 {% csrf_token %}
                 <div class="input-group">
                     <i class="fa fa-key icon"></i>
-                    <input type="text" placeholder="Verification Code" required>
+                    <input type="text" placeholder="Verification Code" name="ver_code" required>
                 </div>
                 <button type="submit">Verify Code</button>
             </form>

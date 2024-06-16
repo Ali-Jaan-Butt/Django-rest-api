@@ -15,15 +15,15 @@
             </div>
             <h2>Update Password</h2>
             <p>Please enter your new password.</p>
-            <form action="{% url 'login' %}">
+            <form method="post" action="{% url 'update-pass' %}">
                 {% csrf_token %}
                 <div class="input-group">
                     <i class="fa fa-lock icon"></i>
-                    <input type="password" placeholder="New Password" required>
+                    <input type="password" placeholder="New Password" name="updated-pass" required>
                 </div>
                 <div class="input-group">
                     <i class="fa fa-lock icon"></i>
-                    <input type="password" placeholder="Confirm New Password" required>
+                    <input type="password" placeholder="Confirm New Password" name="conf-update-pass" required>
                 </div>
                 <button type="submit">Update Password</button>
             </form>

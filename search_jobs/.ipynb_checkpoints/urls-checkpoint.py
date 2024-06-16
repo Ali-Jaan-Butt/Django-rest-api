@@ -28,4 +28,6 @@ urlpatterns = [
     path('forget-password', views.forget, name='forget_pass'),
     path('verify-code', views.verify, name='verify-pass'),
     path('verification-code', views.email_verify, name='code'),
+    path('enter-code', views.code_verify, name='code-enter'),
+    path('changed', views.update_pass, name='update-pass'),
 ]
