@@ -30,4 +30,6 @@ urlpatterns = [
     path('verification-code', views.email_verify, name='code'),
     path('enter-code', views.code_verify, name='code-enter'),
     path('changed', views.update_pass, name='update-pass'),
+    path('client-page', views.client_dashboard, name='client'),
+    path('internships', views.save_internship, name='interns'),
 ]

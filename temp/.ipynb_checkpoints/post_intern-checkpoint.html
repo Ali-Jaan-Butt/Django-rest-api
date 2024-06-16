@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post an Internship</title>
+    <link rel="stylesheet" href="form-styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Post an Internship</h1>
+        </header>
+        <main>
+            <form action="{% url 'interns' %}" method="post" class="internship-form">
+                {% csrf_token %}
+                <label for="title">Internship Title</label>
+                <input type="text" id="title" name="title" required>
+                
+                <label for="company">Company Name</label>
+                <input type="text" id="company" name="company" required>
+                
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" required>
+                
+                <label for="duration">Duration</label>
+                <input type="text" id="duration" name="duration" required>
+                
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="5" required></textarea>
+                
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </main>
+    </div>
+    <style>
+        /* form-styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #fc466b, #3f5efb);
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+header {
+    padding: 20px 0;
+    border-bottom: 2px solid #eee;
+}
+
+h1 {
+    color: #333;
+}
+
+.internship-form {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.internship-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.internship-form input,
+.internship-form textarea {
+    width: 97%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.internship-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.internship-form button:hover {
+    background-color: #0056b3;
+}
+    </style>
+</body>
+</html>

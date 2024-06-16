@@ -22,6 +22,25 @@ def verify(request):
 def update(request):
     return render(request, 'temp/update_pass.html')
 
+def client_dashboard(request):
+    return render(request, 'temp/post_intern.html')
+
+def save_internship(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        comp = request.POST.get('company')
+        loc = request.POST.get('location')
+        dur = request.POST.get('duration')
+        des = request.POST.get('description')
+        client = pymongo.MongoClient()
+        database_name = "web_project"
+        db = client[database_name]
+        collection_name = "interns_data"
+        collection = db[collection_name]
+        jobs = {'Title':title, 'Company':comp, 'Location':loc, 'Duration':dur, 'Description':des}
+        collection.insert_one(jobs)
+    return render(request, 'temp/client_dash.html')
+
 def login_info(request):
     if request.method == 'POST':
         con_email = None
@@ -50,7 +69,10 @@ def login_info(request):
                 collection.insert_one(log)
                 print(login_email)
                 print(login_pass)
-                return render(request, 'temp/job_posting.html')
+                if obj['User_Type']=='client':
+                    return render(request, 'temp/client_dash.html')
+                elif obj['User_Type']=='job_seeker':
+                    return render(request, 'temp/job_posting.html')
             else:
                 print('Invalid login cridentials')
                 log = {}

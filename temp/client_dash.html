@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internships</title>
+    <link rel="stylesheet" href="#">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <form action="{% url 'client' %}">
+                <h1>Internship Opportunities</h1>
+                <button class="post-button">Post an Internship</button>
+            </form>
+        </header>
+        <main>
+            <div class="internship-list">
+                <div class="internship-item">
+                    <h2>Software Engineering Intern</h2>
+                    <p>Company: Tech Corp</p>
+                    <p>Location: San Francisco, CA</p>
+                    <p>Duration: 3 months</p>
+                </div>
+                <div class="internship-item">
+                    <h2>Data Science Intern</h2>
+                    <p>Company: Data Inc.</p>
+                    <p>Location: New York, NY</p>
+                    <p>Duration: 6 months</p>
+                </div>
+                <!-- Add more internship items as needed -->
+            </div>
+        </main>
+    </div>
+    <style>
+        /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #fc466b, #3f5efb);
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 2px solid #eee;
+}
+
+h1 {
+    color: #f9f9f9;
+}
+
+.post-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.post-button:hover {
+    background-color: #0056b3;
+}
+
+.internship-list {
+    margin-top: 20px;
+}
+
+.internship-item {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.internship-item h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.internship-item p {
+    margin: 5px 0;
+    color: #666;
+}
+    </style>
+</body>
+</html>
