@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from webapp import views
+from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -32,4 +33,7 @@ urlpatterns = [
     path('changed', views.update_pass, name='update-pass'),
     path('client-page', views.client_dashboard, name='client'),
     path('internships', views.save_internship, name='interns'),
+    path('api/items/', views.get_items, name='get_items'),
+    path('api/items/<str:item_id>/', views.get_item, name='get_item'),
+    path('api/items/create/', views.create_item, name='create_item'),
 ]

@@ -6,6 +6,50 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import random
 import string
+from fastapi import FastAPI
+from django.http import JsonResponse
+from django.urls import path
+from django.conf import settings
+from django.core.management import execute_from_command_line
+from pymongo import MongoClient
+from bson.objectid import ObjectId
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+client = MongoClient('mongodb://localhost:27017/')
+db = client['web_project']
+collection = db['interns_data']
+
+@csrf_exempt
+def get_items(request):
+    if request.method == 'GET':
+        items = list(collection.find({}, {'_id': 1, 'Title': 1, 'Company': 1, 'Location': 1, 'Duration': 1, 'Description': 1}))
+        for item in items:
+            item['_id'] = str(item['_id'])
+        return JsonResponse(items, safe=False)
+    return JsonResponse({'error': 'Invalid method'}, status=405)
+
+@csrf_exempt
+def get_item(request, item_id):
+    if request.method == 'GET':
+        try:
+            item = collection.find_one({'_id': ObjectId(item_id)}, {'_id': 1, 'Title': 1, 'Company': 1, 'Location': 1, 'Duration': 1, 'Description': 1})
+            if item:
+                item['_id'] = str(item['_id'])
+                return JsonResponse(item)
+            else:
+                return JsonResponse({'error': 'Item not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    return JsonResponse({'error': 'Invalid method'}, status=405)
+
+@csrf_exempt
+def create_item(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        result = collection.insert_one(data)
+        return JsonResponse({'_id': str(result.inserted_id)}, status=201)
+    return JsonResponse({'error': 'Invalid method'}, status=405)
 
 def myapp(request):
     return render(request, 'temp/login.html')
@@ -39,6 +83,7 @@ def save_internship(request):
         collection = db[collection_name]
         jobs = {'Title':title, 'Company':comp, 'Location':loc, 'Duration':dur, 'Description':des}
         collection.insert_one(jobs)
+        get_items(request)
     return render(request, 'temp/client_dash.html')
 
 def login_info(request):
