@@ -16,18 +16,16 @@
         </header>
         <main>
             <div class="internship-list">
-                <div class="internship-item">
-                    <h2>Software Engineering Intern</h2>
-                    <p>Company: Tech Corp</p>
-                    <p>Location: San Francisco, CA</p>
-                    <p>Duration: 3 months</p>
-                </div>
-                <div class="internship-item">
-                    <h2>Data Science Intern</h2>
-                    <p>Company: Data Inc.</p>
-                    <p>Location: New York, NY</p>
-                    <p>Duration: 6 months</p>
-                </div>
+                {% for key, job in dict_data.items %}
+                    <div class="internship-item">
+                        <h2>{{ job.Title }}</h2>
+                        <p>Company: {{ job.Company }}</p>
+                        <p>Location: {{ job.Location }}</p>
+                        <p>Duration: {{ job.Duration }}</p>
+                        <p>Description: {{ job.Description }}</p>
+                    </div>
+                    <hr>
+                {% endfor %}
                 <!-- Add more internship items as needed -->
             </div>
         </main>

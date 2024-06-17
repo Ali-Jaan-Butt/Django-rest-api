@@ -36,4 +36,5 @@ urlpatterns = [
     path('api/items/', views.get_items, name='get_items'),
     path('api/items/<str:item_id>/', views.get_item, name='get_item'),
     path('api/items/create/', views.create_item, name='create_item'),
+    path('client-postings', views.cli_dash, name='cli-postings'),
 ]

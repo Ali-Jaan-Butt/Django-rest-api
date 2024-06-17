@@ -15,6 +15,8 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from django.views.decorators.csrf import csrf_exempt
 import json
+from sentence_transformers import SentenceTransformer, util
+import requests
 
 client = MongoClient('mongodb://localhost:27017/')
 db = client['web_project']
@@ -69,6 +71,13 @@ def update(request):
 def client_dashboard(request):
     return render(request, 'temp/post_intern.html')
 
+def cli_dash(request):
+    res = requests.get('http://127.0.0.1:8000/api/items/')
+    data = res.json()
+    dict_data = {index: value for index, value in enumerate(data)}
+    data = {'dict_data':dict_data}
+    return render(request, 'temp/client_dash.html', data)
+
 def save_internship(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -84,7 +93,7 @@ def save_internship(request):
         jobs = {'Title':title, 'Company':comp, 'Location':loc, 'Duration':dur, 'Description':des}
         collection.insert_one(jobs)
         get_items(request)
-    return render(request, 'temp/client_dash.html')
+    return cli_dash(request)
 
 def login_info(request):
     if request.method == 'POST':
@@ -103,20 +112,24 @@ def login_info(request):
             if login_email==obj['Email'] and login_pass==obj['Password']:
                 con_email = login_email
                 con_pass = login_pass
+                user_type = obj['User_Type']
         if con_pass!=None:
             if con_email==login_email and con_pass==login_pass:
-                log = {'Email':login_email, 'Password':login_pass, 'User_Type':obj['User_Type']}
+                log = {'Email':login_email, 'Password':login_pass, 'User_Type':user_type}
                 client = pymongo.MongoClient()
                 database_name = "web_project"
                 db = client[database_name]
                 collection_name = "login_data"
                 collection = db[collection_name]
                 collection.insert_one(log)
+                print(user_type)
                 print(login_email)
                 print(login_pass)
-                if obj['User_Type']=='client':
-                    return render(request, 'temp/client_dash.html')
-                elif obj['User_Type']=='job_seeker':
+                if user_type=='client':
+                    get_items(request)
+                    return cli_dash(request)
+                elif user_type=='job_seeker':
+                    get_items(request)
                     return render(request, 'temp/job_posting.html')
             else:
                 print('Invalid login cridentials')

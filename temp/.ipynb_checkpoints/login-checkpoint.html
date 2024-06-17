@@ -8,37 +8,40 @@
     <link rel="stylesheet" href="#">
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-form">
-            <div class="user-icon">
-                <i class="fa fa-user-circle"></i>
+    <div class="web-title">
+        <h1>Interns.Hub</h1>
+        <div class="login-container">
+            <div class="login-form">
+                <div class="user-icon">
+                    <i class="fa fa-user-circle"></i>
+                </div>
+                <form action="{% url 'login_inf' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <i class="fa fa-envelope icon"></i>
+                        <input type="email" placeholder="Email ID" name="login_email" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa fa-lock icon"></i>
+                        <input type="password" placeholder="Password" name="login_password" required>
+                    </div>
+                    <div class="options">
+                        <label>
+                            <input type="checkbox"> Remember me
+                        </label>
+                        <a href="{% url 'forget_pass' %}" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    <button type="submit">Login</button>
+                    <a href="{% url 'signup' %}" class="sign-up">Don't have an account?</a>
+                </form>
+                <!-- {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <p class="{{ message.tags }}">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %} -->
             </div>
-            <form action="{% url 'login_inf' %}" method="post">
-                {% csrf_token %}
-                <div class="input-group">
-                    <i class="fa fa-envelope icon"></i>
-                    <input type="email" placeholder="Email ID" name="login_email" required>
-                </div>
-                <div class="input-group">
-                    <i class="fa fa-lock icon"></i>
-                    <input type="password" placeholder="Password" name="login_password" required>
-                </div>
-                <div class="options">
-                    <label>
-                        <input type="checkbox"> Remember me
-                    </label>
-                    <a href="{% url 'forget_pass' %}" class="forgot-password">Forgot Password?</a>
-                </div>
-                <button type="submit">Login</button>
-                <a href="{% url 'signup' %}" class="sign-up">Don't have an account?</a>
-            </form>
-            <!-- {% if messages %}
-                <div class="messages">
-                    {% for message in messages %}
-                        <p class="{{ message.tags }}">{{ message }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %} -->
         </div>
     </div>
 
@@ -122,6 +125,9 @@
         }
         button:hover {
             background: #1667c0;
+        }
+        .web-title h1 {
+            font-size: 5em;
         }
     </style>
 </body>

@@ -8,42 +8,45 @@
     <link rel="stylesheet" href="#">
 </head>
 <body>
-    <div class="signup-container">
-        <div class="signup-form">
-            <div class="user-icon">
-                <i class="fa fa-user-circle"></i>
+    <div class="web-title">
+        <h1>Interns.Hub</h1>
+        <div class="signup-container">
+            <div class="signup-form">
+                <div class="user-icon">
+                    <i class="fa fa-user-circle"></i>
+                </div>
+                <form action="{% url 'signup_inf' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <i class="fa fa-user icon"></i>
+                        <input type="text" placeholder="Full Name" name="name" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa fa-envelope icon"></i>
+                        <input type="email" placeholder="Email ID" name="email" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa fa-lock icon"></i>
+                        <input type="password" placeholder="Password" name="pass" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa fa-lock icon"></i>
+                        <input type="password" placeholder="Confirm Password" name="conf_pass" required>
+                    </div>
+                    <label for="user_type">Sign up as:</label>
+                    <select id="user_type" name="user_type" required>
+                        <option value="job_seeker">Job Seeker</option>
+                        <option value="client">Company</option>
+                    </select>
+                    <div class="options">
+                        <label>
+                            <input type="checkbox"> I agree to the Terms and Conditions
+                        </label>
+                    </div>
+                    <button type="submit">Sign Up</button>
+                    <a href="{% url 'login' %}" class="log-in">Already have an account?</a>
+                </form>
             </div>
-            <form action="{% url 'signup_inf' %}" method="post">
-                {% csrf_token %}
-                <div class="input-group">
-                    <i class="fa fa-user icon"></i>
-                    <input type="text" placeholder="Full Name" name="name" required>
-                </div>
-                <div class="input-group">
-                    <i class="fa fa-envelope icon"></i>
-                    <input type="email" placeholder="Email ID" name="email" required>
-                </div>
-                <div class="input-group">
-                    <i class="fa fa-lock icon"></i>
-                    <input type="password" placeholder="Password" name="pass" required>
-                </div>
-                <div class="input-group">
-                    <i class="fa fa-lock icon"></i>
-                    <input type="password" placeholder="Confirm Password" name="conf_pass" required>
-                </div>
-                <label for="user_type">Sign up as:</label>
-                <select id="user_type" name="user_type" required>
-                    <option value="job_seeker">Job Seeker</option>
-                    <option value="client">Company</option>
-                </select>
-                <div class="options">
-                    <label>
-                        <input type="checkbox"> I agree to the Terms and Conditions
-                    </label>
-                </div>
-                <button type="submit">Sign Up</button>
-                <a href="{% url 'login' %}" class="log-in">Already have an account?</a>
-            </form>
         </div>
     </div>
 
@@ -123,6 +126,9 @@
         }
         button:hover {
             background: #1667c0;
+        }
+        .web-title h1{
+            font-size: 5em;
         }
     </style>
 </body>
