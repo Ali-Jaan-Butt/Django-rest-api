@@ -4,7 +4,7 @@ We will update it untill the last commit named "completed"......
 
 # Django Project
 
-This is a Django project that provides a web application for [brief description of your project]. This README file contains instructions for setting up and running the project.
+This is a Django project that provides a web application for companies to post internship opportunities for graduated people and for students. In this project we make an api for the internship data from the database. This README file contains instructions for setting up and running the project.
 
 ## Table of Contents
 
@@ -35,5 +35,5 @@ Before you begin, ensure you have met the following requirements:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/yourproject.git
+   git clone https://github.com/Ali-Jaan-Butt/Django-rest-api.git
    cd yourproject
