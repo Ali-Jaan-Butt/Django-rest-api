@@ -71,12 +71,103 @@ def update(request):
 def client_dashboard(request):
     return render(request, 'temp/post_intern.html')
 
+def profile(request):
+    with open('log_email.txt', 'r') as file:
+        em = file.read()
+    client = pymongo.MongoClient()
+    database_name = "web_project"
+    db = client[database_name]
+    collection_name = "signup_data"
+    collection = db[collection_name]
+    cursor = collection.find()
+    for document in cursor:
+        obj = document
+        if em==obj['Email']:
+            prof_email = em
+            prof_name = obj['Name']
+            tags = obj['Tags']
+            if tags!=None:
+                tags = obj['Tags']
+    inf = {'User_Name':prof_name, 'User_Email':prof_email, 'Tags':tags}
+    return render(request, 'temp/profile.html', inf)
+
+def save_tags(request):
+    if request.method == 'POST':
+        tag = request.POST.get('tags-input')
+        up_tag = None
+        with open('log_email.txt', 'r') as file:
+            email = file.read()
+        client = pymongo.MongoClient()
+        database_name = "web_project"
+        db = client[database_name]
+        collection_name = "signup_data"
+        collection = db[collection_name]
+        cursor = collection.find()
+        for document in cursor:
+            obj = document
+            if email==obj['Email']:
+                up_tag = tag
+                ud_obj = { '$set': {'Tags':up_tag}}
+                collection.update_one(obj, ud_obj)
+    return interns_list(request)
+
 def cli_dash(request):
     res = requests.get('http://127.0.0.1:8000/api/items/')
     data = res.json()
     dict_data = {index: value for index, value in enumerate(data)}
     data = {'dict_data':dict_data}
     return render(request, 'temp/client_dash.html', data)
+
+def interns_list(request):
+    with open('log_email.txt', 'r') as file:
+        gm = file.read()
+    model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+    res = requests.get('http://127.0.0.1:8000/api/items/')
+    data = res.json()
+    results = []
+    client = pymongo.MongoClient()
+    database_name = "web_project"
+    db = client[database_name]
+    collection_name = "signup_data"
+    collection = db[collection_name]
+    cursor = collection.find()
+    for document in cursor:
+        obj = document
+        if gm == obj['Email']:
+            if obj['Tags'] != None:
+                user_tag = obj['Tags']
+            else:
+                user_tag = None
+    if user_tag != None:
+        for ml in data:
+            des = [ml['Description']]
+            tag = [user_tag]
+            job_embeddings = model.encode(des, convert_to_tensor=True)
+            profile_embeddings = model.encode(tag, convert_to_tensor=True)
+            similarity_scores = util.pytorch_cos_sim(job_embeddings, profile_embeddings)
+            results.append(similarity_scores)
+        def find_top_n_max_indices(lst, n):
+            # Enumerate the list to keep track of indices
+            indexed_lst = list(enumerate(lst))
+            
+            # Sort the list based on the values in descending order
+            sorted_lst = sorted(indexed_lst, key=lambda x: x[1], reverse=True)
+            
+            # Get the top n max values with their original indices
+            top_n = sorted_lst[:n]
+            
+            # Separate the values and their indices
+            top_n_values = [item[1] for item in top_n]
+            top_n_indices = [item[0] for item in top_n]
+            
+            return top_n_values, top_n_indices
+        top_values, top_indices = find_top_n_max_indices(results, 3)
+        data_mod = [data[ind] for ind in top_indices]
+        dict_data = {index: value for index, value in enumerate(data_mod)}
+    else:
+        dict_data = {index: value for index, value in enumerate(data)}
+    data = {'dict_data':dict_data}
+    return render(request, 'temp/job_posting.html', data)
 
 def save_internship(request):
     if request.method == 'POST':
@@ -116,6 +207,8 @@ def login_info(request):
         if con_pass!=None:
             if con_email==login_email and con_pass==login_pass:
                 log = {'Email':login_email, 'Password':login_pass, 'User_Type':user_type}
+                with open('log_email.txt', 'w') as file:
+                    file.write(login_email)
                 client = pymongo.MongoClient()
                 database_name = "web_project"
                 db = client[database_name]
@@ -130,7 +223,7 @@ def login_info(request):
                     return cli_dash(request)
                 elif user_type=='job_seeker':
                     get_items(request)
-                    return render(request, 'temp/job_posting.html')
+                    return interns_list(request)
             else:
                 print('Invalid login cridentials')
                 log = {}
@@ -155,7 +248,7 @@ def signup_info(request):
         password = request.POST.get('pass')
         conf_pass = request.POST.get('conf_pass')
         user_type = request.POST.get('user_type')
-        sign = {'Name':name, 'Email':email, 'Password':password, 'Confirm_Password':conf_pass, 'User_Type':user_type}
+        sign = {'Name':name, 'Email':email, 'Password':password, 'Confirm_Password':conf_pass, 'User_Type':user_type, 'Tags':None}
         collection.insert_one(sign)
         return myapp(request)
     return user_type

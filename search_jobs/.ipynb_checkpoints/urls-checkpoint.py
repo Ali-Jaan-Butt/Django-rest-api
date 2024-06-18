@@ -37,4 +37,7 @@ urlpatterns = [
     path('api/items/<str:item_id>/', views.get_item, name='get_item'),
     path('api/items/create/', views.create_item, name='create_item'),
     path('client-postings', views.cli_dash, name='cli-postings'),
+    path('intern-list', views.interns_list, name='int_list'),
+    path('profile', views.profile, name='profile'),
+    path('save-tag', views.save_tags, name='tags'),
 ]

@@ -8,21 +8,24 @@
     <link rel="stylesheet" href="#">
 </head>
 <body>
-    <div class="forgot-password-container">
-        <div class="forgot-password-form">
-            <div class="user-icon">
-                <i class="fa fa-user-circle"></i>
-            </div>
-            <h2>Forgot Password</h2>
-            <p>Please enter your email address to reset your password.</p>
-            <form method="post" action="{% url 'code' %}">
-                {% csrf_token %}
-                <div class="input-group">
-                    <i class="fa fa-envelope icon"></i>
-                    <input type="email" placeholder="Email ID" name="verify-email" required>
+    <div class="web-title">
+        <h1>Interns.Hub</h1>
+        <div class="forgot-password-container">
+            <div class="forgot-password-form">
+                <div class="user-icon">
+                    <i class="fa fa-user-circle"></i>
                 </div>
-                <button type="submit">Reset Password</button>
-            </form>
+                <h2>Forgot Password</h2>
+                <p>Please enter your email address to reset your password.</p>
+                <form method="post" action="{% url 'code' %}">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <i class="fa fa-envelope icon"></i>
+                        <input type="email" placeholder="Email ID" name="verify-email" required>
+                    </div>
+                    <button type="submit">Reset Password</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -99,6 +102,9 @@
         }
         button:hover {
             background: #1667c0;
+        }
+        .web-title h1 {
+            font-size: 5em;
         }
     </style>
 </body>

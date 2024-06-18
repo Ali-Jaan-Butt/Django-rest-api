@@ -12,30 +12,34 @@
 <body>
     <header>
         <h1>Job Postings</h1>
+        <form action="{% url 'profile' %}">
+            <button class="profile">Profile</button>
+        </form>
+        <form action="{% url 'login' %}">
+            <div class="logout">
+                <button class="log-out">Logout</button>
+            </div>
+        </form>
     </header>
     <main>
-        <section class="job-listings">
-            <article class="job-post">
-                <h2>Frontend Developer</h2>
-                <p><strong>Company:</strong> Tech Innovators</p>
-                <p><strong>Location:</strong> Remote</p>
-                <p><strong>Salary:</strong> $80,000 - $100,000</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
-                <button>Apply Now</button>
-            </article>
-            <article class="job-post">
-                <h2>Backend Developer</h2>
-                <p><strong>Company:</strong> Data Solutions</p>
-                <p><strong>Location:</strong> New York, NY</p>
-                <p><strong>Salary:</strong> $90,000 - $120,000</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
-                <button>Apply Now</button>
-            </article>
-            <!-- Add more job posts as needed -->
-        </section>
+        <form action="#">
+            <section class="job-listings">
+                {% for key, job in dict_data.items %}
+                    <article class="job-post">
+                        <h2>{{ job.Title }}</h2>
+                        <p><strong>Company:</strong> {{ job.Company }}</p>
+                        <p><strong>Location:</strong> {{ job.Location }}</p>
+                        <p><strong>Duration:</strong> {{ job.Duration }}</p>
+                        <p>{{ job.Description }}</p>
+                        <button>Apply Now</button>
+                    </article>
+                {% endfor %}
+                <!-- Add more job posts as needed -->
+            </section>
+        </form>
     </main>
     <footer>
-        <p>&copy; 2024 Job Postings. All rights reserved.</p>
+        <p>&copy; 2024 Internships Postings. All rights reserved.</p>
     </footer>
     <style>
         /* Import Google Fonts */
@@ -44,11 +48,11 @@
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background-color: #f5f5f5;
+    background: linear-gradient(135deg, #fc466b, #3f5efb);
 }
 
 header {
-    background-color: #4CAF50;
+    background: linear-gradient(135deg, #fc466b, #3f5efb);
     color: white;
     padding: 20px 0;
     text-align: center;
@@ -64,6 +68,36 @@ main {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
+}
+
+.profile {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.profile:hover {
+    background-color: #0056b3;
+}
+
+.log-out {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.log-out:hover {
+    background-color: #0056b3;
 }
 
 .job-listings {
@@ -104,7 +138,7 @@ main {
 
 footer {
     text-align: center;
-    padding: 20px 0;
+    padding: 5px 0;
     background-color: #333;
     color: white;
     position: fixed;
