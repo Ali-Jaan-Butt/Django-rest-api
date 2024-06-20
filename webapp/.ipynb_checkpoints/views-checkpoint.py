@@ -71,6 +71,10 @@ def update(request):
 def client_dashboard(request):
     return render(request, 'temp/post_intern.html')
 
+def for_fun(request):
+    a = 2
+    return a
+
 def profile(request):
     with open('log_email.txt', 'r') as file:
         em = file.read()
@@ -147,19 +151,11 @@ def interns_list(request):
             similarity_scores = util.pytorch_cos_sim(job_embeddings, profile_embeddings)
             results.append(similarity_scores)
         def find_top_n_max_indices(lst, n):
-            # Enumerate the list to keep track of indices
             indexed_lst = list(enumerate(lst))
-            
-            # Sort the list based on the values in descending order
             sorted_lst = sorted(indexed_lst, key=lambda x: x[1], reverse=True)
-            
-            # Get the top n max values with their original indices
             top_n = sorted_lst[:n]
-            
-            # Separate the values and their indices
             top_n_values = [item[1] for item in top_n]
             top_n_indices = [item[0] for item in top_n]
-            
             return top_n_values, top_n_indices
         top_values, top_indices = find_top_n_max_indices(results, 3)
         data_mod = [data[ind] for ind in top_indices]
@@ -168,6 +164,18 @@ def interns_list(request):
         dict_data = {index: value for index, value in enumerate(data)}
     data = {'dict_data':dict_data}
     return render(request, 'temp/job_posting.html', data)
+
+def applied(request):
+    if request.method == 'POST':
+        with open('log_email.txt', 'r') as file:
+            link_email = file.read()
+        title = request.POST.get('int-title')
+        company = request.POST.get('int-comp')
+        location = request.POST.get('int-loc')
+        duration = request.POST.get('int-dur')
+        description = request.POST.get('int-des')
+        print(title)
+    return interns_list(request)
 
 def save_internship(request):
     if request.method == 'POST':
@@ -190,6 +198,8 @@ def login_info(request):
     if request.method == 'POST':
         con_email = None
         con_pass = None
+        log = {}
+        log['User_Type'] = 'Nothing'
         login_email = request.POST.get('login_email')
         login_pass = request.POST.get('login_password')
         client = pymongo.MongoClient()
@@ -234,7 +244,7 @@ def login_info(request):
             log = {}
             log['User_Type'] = 'Nothing'
             return render(request, 'temp/login.html')
-    return log['User_Type']
+    return for_fun(request)
 
 def signup_info(request):
     if request.method == 'POST':

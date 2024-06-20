@@ -71,6 +71,10 @@ def update(request):
 def client_dashboard(request):
     return render(request, 'temp/post_intern.html')
 
+def for_fun(request):
+    a = 2
+    return a
+
 def profile(request):
     with open('log_email.txt', 'r') as file:
         em = file.read()
@@ -161,6 +165,18 @@ def interns_list(request):
     data = {'dict_data':dict_data}
     return render(request, 'temp/job_posting.html', data)
 
+def applied(request):
+    if request.method == 'POST':
+        with open('log_email.txt', 'r') as file:
+            link_email = file.read()
+        title = request.POST.get('int-title')
+        company = request.POST.get('int-comp')
+        location = request.POST.get('int-loc')
+        duration = request.POST.get('int-dur')
+        description = request.POST.get('int-des')
+        print(title)
+    return interns_list(request)
+
 def save_internship(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -182,6 +198,8 @@ def login_info(request):
     if request.method == 'POST':
         con_email = None
         con_pass = None
+        log = {}
+        log['User_Type'] = 'Nothing'
         login_email = request.POST.get('login_email')
         login_pass = request.POST.get('login_password')
         client = pymongo.MongoClient()
@@ -226,7 +244,7 @@ def login_info(request):
             log = {}
             log['User_Type'] = 'Nothing'
             return render(request, 'temp/login.html')
-    return log['User_Type']
+    return for_fun(request)
 
 def signup_info(request):
     if request.method == 'POST':

@@ -40,4 +40,5 @@ urlpatterns = [
     path('intern-list', views.interns_list, name='int_list'),
     path('profile', views.profile, name='profile'),
     path('save-tag', views.save_tags, name='tags'),
+    path('dash-applied', views.applied, name='apply'),
 ]
