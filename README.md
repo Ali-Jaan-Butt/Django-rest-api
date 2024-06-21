@@ -36,4 +36,14 @@ Before you begin, ensure you have met the following requirements:
 
    ```bash
    git clone https://github.com/Ali-Jaan-Butt/Django-rest-api.git
-   cd yourproject
+
+2. **Installations:**
+   Install all the libraries required specially Django using pip.
+
+3. **Connect Database:**
+   Install MongoDB GUI on your system and then run
+   ```bash
+   cd db
+   mongod --dbpath ./
+
+   
