@@ -44,7 +44,10 @@
             </div>
         </div>
     </div>
-
+    <div class="bubble blue large bubble-1"></div>
+    <div class="bubble blue medium bubble-2"></div>
+    <div class="bubble orange small bubble-3"></div>
+    <div class="bubble orange large bubble-4"></div>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -54,6 +57,8 @@
             justify-content: center;
             align-items: center;
             margin: 0;
+            overflow: hidden;
+            position: relative;
         }
         .login-container {
             background: rgba(255, 255, 255, 0.2);
@@ -62,6 +67,8 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 350px;
+            position: relative;
+            z-index: 2;
         }
         .user-icon {
             background: #1a73e8;
@@ -128,6 +135,45 @@
         }
         .web-title h1 {
             font-size: 5em;
+        }
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+        .bubble.blue {
+            background: #1a73e8;
+        }
+        .bubble.orange {
+            background: #fc5c65;
+        }
+        .bubble.large {
+            width: 200px;
+            height: 200px;
+        }
+        .bubble.medium {
+            width: 150px;
+            height: 150px;
+        }
+        .bubble.small {
+            width: 100px;
+            height: 100px;
+        }
+        .bubble-1 {
+            top: 10%;
+            left: 20%;
+        }
+        .bubble-2 {
+            top: 30%;
+            right: 10%;
+        }
+        .bubble-3 {
+            bottom: 20%;
+            left: 15%;
+        }
+        .bubble-4 {
+            bottom: 10%;
+            right: 25%;
         }
     </style>
 </body>
