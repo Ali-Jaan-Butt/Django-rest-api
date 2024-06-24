@@ -1,7 +1,3 @@
-# Django Rest Api with MongoDB
-### Project is still under development
-We will update it untill the last commit named "completed"......
-
 # Django Project
 
 This is a Django project that provides a web application for companies to post internship opportunities for graduated people and for students. In this project we make an api for the internship data from the database. This README file contains instructions for setting up and running the project.
