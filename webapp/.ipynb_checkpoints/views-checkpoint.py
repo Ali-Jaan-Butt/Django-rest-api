@@ -6,7 +6,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import random
 import string
-from fastapi import FastAPI
 from django.http import JsonResponse
 from django.urls import path
 from django.conf import settings

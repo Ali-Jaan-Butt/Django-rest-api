@@ -36,8 +36,15 @@ Before you begin, ensure you have met the following requirements:
 
 2. **Installations:**
    Install all the libraries required specially Django using pip.
+   ```bash
+   pip install Django
+   pip install pymongo
+   pip install smtplib
+   pip install fastapi
+   pip install sentence_transformers
+   pip install requests
 
-3. **Connect Database:**
+4. **Connect Database:**
    Install MongoDB GUI on your system and then run
    ```bash
    cd db
