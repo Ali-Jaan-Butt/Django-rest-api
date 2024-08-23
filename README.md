@@ -10,7 +10,6 @@ This is a Django project that provides a web application for companies to post i
 - [Testing](#testing)
 - [Explainable AI Integration](#explainable-ai-integration)
 - [License](#license)
-- [Contributing](#contributing)
 - [Contact](#contact)
 
 ## Installation
@@ -72,10 +71,6 @@ Be in the root directory where the manage.py file is located, then
 ## Licence
 
 ### Having MIT licence to this project
-
-## Contribution
-
-### Having one contributor as she is the group member.
 
 ## Contact
 
